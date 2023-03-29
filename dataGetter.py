@@ -1,31 +1,23 @@
 import mysql.connector
+import Table_Classes
 
-db = mysql.connector.connect(host="localhost", user="root", passwd="guest", database="photoShare")
+class MySQLDatabase:
+    def __init__(self):
+        self.db = mysql.connector.connect(host="localhost", user="root", passwd="guest", database="photoShare")
+        self.cursor = self.db.cursor()
 
-mycursor = db.cursor()
+    def insert_user(self, userID, albumID, fname, lname, email, DOB, gender, homeTown, PW):
+        query = "INSERT INTO users (userID, albumID, fname, lname, email, DOB, gender, homeTown, PW) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        values = (userID, albumID, fname, lname, email, DOB, gender, homeTown, PW)
+        self.cursor.execute(query, values)
 
-# SQL query to insert a new record into the Users table
-#sql = "INSERT INTO Users (UserID, FriendID, AlbumID, Fname, Lname, email, DOB, Gender, HomeTown, PW) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-#val = (1, 2, 3, "John", "Doe", "johndoe@example.com", "1990-01-01", "Male", "New York", "password123")
+    def select_user_by_email(self, email):
+        sql = "SELECT email, PW FROM Users WHERE email = %s"
+        val = (email,)
+        self.cursor.execute(sql, val)
+        result = self.cursor.fetchone()
+        return result
 
-# Execute the query with values
-#mycursor.execute(sql, val)
-
-# Commit the changes to the database
-#db.commit()
-
-# Print the number of rows that were inserted
-#print(mycursor.rowcount, "record inserted.")
-
-sql = "SELECT Fname FROM Users WHERE UserID = %s"
-val = (1,)
-
-# Execute the query with values
-mycursor.execute(sql, val)
-
-# Fetch the result
-result = mycursor.fetchone()
-
-print(result[0])
-
-
+    def __del__(self):
+        self.cursor.close()
+        self.db.close()
