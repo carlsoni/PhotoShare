@@ -1,8 +1,7 @@
-import mysql.connector
-
 class User:
-    def __init__(self, userID ,albumID, fname , lname, email, DOB, gender, homeTown,PW ):
+    def __init__(self, userID, friendID ,albumID, fname , lname, email, DOB, gender, homeTown, PW ):
         self.userID = userID
+        self.friendID = friendID
         self.albumID = albumID
         self.fname = fname
         self.lname = lname
@@ -11,31 +10,6 @@ class User:
         self.gender = gender
         self.homeTown = homeTown
         self.PW = PW
-        db = mysql.connector.connect(host="localhost", user="root", passwd="guest", database="photoShare")
-
-        self.mycursor = db.cursor()
-
-    def insert(self):
-        sql = 'INSERT INTO users (userID, albumID, fname, lname, email, DOB, gender, homeTown, PW) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)'
-        values = (self.userID, self.albumID, self.fname, self.lname, self.email, self.DOB, self.gender, self.homeTown, self.PW)
-        self.cursor.execute(sql, values)
-        self.conn.commit()
-
-    @staticmethod
-    def get_name_pw_and_email_by_email(email):
-        conn = mysql.connector.connect(db=mysql.connector.connect(host="localhost", user="root", passwd="guest", database="photoShare"))
-        cursor = conn.cursor()
-        sql = 'SELECT fname, lname, email, PW FROM users WHERE email=%s'
-        values = (email,)
-        cursor.execute(sql, values)
-        row = cursor.fetchone()
-        if row:
-            return User(*row)
-        else:
-            return None
-
-
-
 
 
 class Friend:
