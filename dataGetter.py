@@ -7,9 +7,9 @@ class MySQLDatabase:
 
 
     #insert functions
-    def insert_user(self, userID, albumID, fname, lname, email, DOB, gender, homeTown, PW):
-        query = "INSERT INTO users (userID, albumID, fname, lname, email, DOB, gender, homeTown, PW) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
-        values = (userID, albumID, fname, lname, email, DOB, gender, homeTown, PW)
+    def insert_user(self, userID, fname, lname, email, DOB, gender, homeTown, PW):
+        query = "INSERT INTO users (userID, fname, lname, email, DOB, gender, homeTown, PW) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        values = (userID, fname, lname, email, DOB, gender, homeTown, PW)
         self.cursor.execute(query, values)
         self.db.commit()
 
@@ -19,16 +19,16 @@ class MySQLDatabase:
         self.cursor.execute(query, values)
         self.db.commit()
 
-    def insert_Uer_Friend(self,  userID, friendID):
+    def insert_User_Friend(self,  userID, friendID):
         query = "INSERT INTO userfriends (UserID, FriendID ) VALUES( %s, %s)"
         values = (userID, friendID)
         self.cursor.execute(query, values)
         self.db.commit()
 
 
-    def insert_album(self, albumID, userID, photoID, albumName, dateCreated):
-        query = "INSERT INTO albums (AlbumID, UserID, PhotoID, AlbumName, DateCreated) VALUES (%s, %s, %s, %s, %s)"
-        values = (albumID, userID, photoID, albumName, dateCreated)
+    def insert_album(self, albumID, userID, albumName, dateCreated):
+        query = "INSERT INTO albums (AlbumID, UserID, AlbumName, DateCreated) VALUES (%s, %s, %s, %s)"
+        values = (albumID, userID, albumName, dateCreated)
         self.cursor.execute(query, values)
         self.db.commit()
 
@@ -47,21 +47,25 @@ class MySQLDatabase:
         self.db.commit()
 
 
-    def insert_photo(self, photoID, albumID, commentID, tagID, caption, DATa):
-        query = "INSERT INTO photo (PhotoID, AlbumID, CommentID, TagID, Caption, Caption, data) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-        values = (photoID, albumID, commentID, tagID, caption, DATa)
+    def insert_photo(self, photoID, albumID, caption, img1):
+        query = "INSERT INTO photo (PhotoID, AlbumID, Caption, Caption, img) VALUES (%s, %s, %s, %s)"
+        values = (photoID, albumID, caption, img1)
         self.cursor.execute(query, values)
         self.db.commit()
 
 
 
-    def insert_tag(self, tagID, photoID, tagname):
-        query = "INSERT INTO tags (TagID, PhotoID, TagName) VALUES (%s, %s, %s)"
-        values = (tagID, photoID, tagname)
+    def insert_tag(self, tagID, tagname):
+        query = "INSERT INTO tags (TagID, PhotoID, TagName) VALUES (%s, %s)"
+        values = (tagID, tagname)
         self.cursor.execute(query, values)
         self.db.commit()
 
-
+    def insert_photo_tag(self, photoID, tagID):
+        query = "INSERT INTO phototags (photoID, tagID) VALUES (%s, %s)"
+        values = (photoID, tagID)
+        self.cursor.execute(query, values)
+        self.db.commit()
 
     #end of insert functions
 
@@ -71,12 +75,12 @@ class MySQLDatabase:
         query = "SELECT Albums.* FROM Albums JOIN Users ON Albums.UserID = Users.UserID WHERE Users.UserID = %s"
         val = (userID, )
         self.cursor.execute(query, val)
-        result = self.cursor.fetchone()
+        result = self.cursor.fetchall()
         return result
 
     # selects the number of friends from a given user
     def select_numFriends(self, userID):
-        query = "SELECT COUNT(*) FROM Friends WHERE FriendID = %s"
+        query = "SELECT COUNT(*) FROM userFriends WHERE userID = %s"
         val = (userID, )
         self.cursor.execute(query, val)
         result = self.cursor.fetchone()
@@ -87,7 +91,7 @@ class MySQLDatabase:
         query = "SELECT * FROM Users WHERE Fname = %s OR Lname = %s"
         val = (fname, lname)
         self.cursor.execute(query, val)
-        resut = self.cursor.fetchone()
+        resut = self.cursor.fetchall()
         return resut
 
 
@@ -99,26 +103,27 @@ class MySQLDatabase:
                 (SELECT COUNT(*) FROM Albums WHERE Albums.UserID = Users.UserID) AS NumAlbums,
                 (SELECT COUNT(*) FROM Comments WHERE Comments.UserID = Users.UserID) AS NumComments,
                 (SELECT COUNT(*) FROM Likes WHERE Likes.UserID = Users.UserID) AS NumLikes,
-                (SELECT COUNT(*) FROM UserFriends WHERE UserFriends.UserID = Users.UserID OR UserFriends.FriendID = Users.UserID) AS NumFriends
-                FROM Users
-                ORDER BY (NumPhotos + NumAlbums + NumComments + NumLikes) DESC
+                (SELECT COUNT(*) FROM UserFriends WHERE UserFriends.UserID = Users.UserID OR UserFriends.FriendID = Users.UserID) AS NumFriends,
+                FROM Users,
+                ORDER BY (NumPhotos + NumAlbums + NumComments + NumLikes) DESC,
                 LIMIT 10;
                 """
         self.cursor.execute(query)
-        result = self.cursor.fetchone()
+        result = self.cursor.fetchall()
         return result
 
     # selects all of a users friends
     def select_users_friends(self, userid):
         query = """
-                SELECT f.Fname, f.Lname FROM Users u, 
-                JOIN UserFriends uf ON u.UserID = uf.UserID OR u.UserID = uf.FriendID,
-                 JOIN Friends f ON uf.FriendID = f.FriendID 
-                 WHERE u.UserID = %s
-                 """
+        SELECT u2.Fname, u2.Lname
+                FROM Users u1
+                JOIN UserFriends uf ON u1.UserID = uf.UserID
+                JOIN Users u2 ON uf.FriendID = u2.UserID
+                WHERE u1.UserID = %s;
+                """
         val = (userid,)
         self.cursor.execute(query, val)
-        result = self.cursor.fetchone()
+        result = self.cursor.fetchall()
         return result
 
     # selects user by email
@@ -128,7 +133,12 @@ class MySQLDatabase:
         self.cursor.execute(sql, val)
         result = self.cursor.fetchone()
         return result
-
+    def select_photo_by_id(self):
+        query = "SELECT img FROM photo WHERE photoID = %s"
+        val = (1, )
+        self.cursor.execute(query, val)
+        result = self.cursor.fetchone()
+        print(result)
 
     # destructer
     def __del__(self):
