@@ -146,16 +146,16 @@ VALUES
 
 INSERT INTO Photo (PhotoID, AlbumID, Caption, img)
 VALUES
-(1, 1, 'I am at the beach, its hotter then my nutsack', load_file('C:\Users\Chris\Desktop\photoSharePhotos\beach.jpg'))
-(2, 6, 'In front of the Eiffel Tower', load_file('C:\Users\Chris\Desktop\photoSharePhotos\eiffle_tower.jpg')),
-(3, 2,  'Family reunion', load_file('C:\Users\Chris\Desktop\photoSharePhotos\family.jpg')),
-(4, 7,  'Newborn baby', load_file('C:\Users\Chris\Desktop\photoSharePhotos\baby.jpg')),
-(5, 3,  'Bride and groom', load_file('C:\Users\Chris\Desktop\photoSharePhotos\wedding.jpg')),
-(6, 8,  'Beautiful sunset', load_file('C:\Users\Chris\Desktop\photoSharePhotos\sunset.jpg')),
-(7, 4,  'College graduation', load_file('C:\Users\Chris\Desktop\photoSharePhotos\grad.jpg')),
-(8, 9,  'Soccer game', load_file('C:\Users\Chris\Desktop\photoSharePhotos\soccer.jpg')),
-(9, 5,  'First dog', load_file('C:\Users\Chris\Desktop\photoSharePhotos\puppy.jpg')),
-(10, 10, 'Gourmet meal', load_file('C:\Users\Chris\Desktop\photoSharePhotos\food.jpg'));
+(1, 1, 'I am at the beach, its hotter then my nutsack', load_file('C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\photoSharePhotos\\beach.jpg'))
+(2, 6, 'In front of the Eiffel Tower', load_file('C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\photoSharePhotos\\eiffle_tower.jpg')),
+(3, 2,  'Family reunion', load_file('C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\photoSharePhotos\\family.jpg')),
+(4, 7,  'Newborn baby', load_file('C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\photoSharePhotos\\baby.jpg')),
+(5, 3,  'Bride and groom', load_file('C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\photoSharePhotos\\wedding.jpg')),
+(6, 8,  'Beautiful sunset', load_file('C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\photoSharePhotos\\sunset.jpg')),
+(7, 4,  'College graduation', load_file('C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\photoSharePhotos\\grad.jpg')),
+(8, 9,  'Soccer game', load_file('C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\photoSharePhotos\\soccer.jpg')),
+(9, 5,  'First dog', load_file('C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\photoSharePhotos\\puppy.jpg')),
+(10, 10, 'Gourmet meal', load_file('C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\photoSharePhotos\\food.jpg'));
 
 
 INSERT INTO Comments (CommentID, PhotoID, UserID, text, date)
