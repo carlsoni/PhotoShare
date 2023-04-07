@@ -126,19 +126,98 @@ class MySQLDatabase:
         result = self.cursor.fetchall()
         return result
 
-    # selects user by email
+    # selects users email and password by email
     def select_user_by_email(self, email):
         sql = "SELECT email, PW FROM Users WHERE email = %s"
         val = (email,)
         self.cursor.execute(sql, val)
         result = self.cursor.fetchone()
         return result
-    def select_photo_by_id(self):
+
+    def select_photo_by_id(self, photoID):
         query = "SELECT img FROM photo WHERE photoID = %s"
-        val = (1, )
+        val = (photoID, )
+        self.cursor.execute(query, val)
+        result = self.cursor.fetchall()
+        return result
+
+    def select_album_by_userID(self, userID):
+        query = "select * from albums WHERE userID = %s"
+        val = (userID, )
+        self.cursor.execute(query, val)
+        result = self.cursor.fetchall()
+        return result
+
+    def delete_photo(self, photoID):
+        val = (photoID,)
+
+        query1 = "delete from phototags where photoID = %s"
+        self.cursor.execute(query1, val)
+        self.db.commit()
+
+        query2 = "delete from likes where photoID = %s"
+        self.cursor.execute(query2, val)
+        self.db.commit()
+
+        query3 = "delete from comments where photoID = %s"
+        self.cursor.execute(query3, val)
+        self.db.commit()
+
+        query = "delete from photo where PhotoID = %s"
+        self.cursor.execute(query, val)
+        self.db.commit()
+
+    def delete_album(self, albumID):
+        photos = self.selct_photos_by_albumID(albumID)
+        for row in photos:
+            self.delete_photo(row[0])
+        query = "delete from albums where albumID = %s"
+        val = (albumID,)
+        self.cursor.execute(query, val)
+        self.db.commit()
+
+    def selct_photos_by_albumID(self, albumID):
+        query = "select * from photo WHERE AlbumID = %s"
+        val = (albumID, )
+        self.cursor.execute(query, val)
+        result = self.cursor.fetchall()
+        return result
+
+
+    #friends of friends
+    def select_friends_of_friends(self, userId):
+        query = """
+            SELECT f2.FriendID, COUNT(*) AS MutualFriends
+            FROM Friends f1
+            JOIN UserFriends uf1 ON f1.FriendID = uf1.FriendID
+            JOIN UserFriends uf2 ON uf1.UserID = uf2.FriendID
+            JOIN Friends f2 ON uf2.FriendID = f2.FriendID
+            WHERE uf1.UserID = %s AND f2.FriendID <> uf1.UserID
+            GROUP BY f2.FriendID
+            ORDER BY MutualFriends DESC;
+        """
+        val = (userId, )
+        self.cursor.execute(query, val)
+        result = self.cursor.fetchall()
+        for row in result:
+            result1 = result1 + (self.select_user_by_ID(row[0]), )
+        return result1
+
+    def select_user_by_ID(self, userID):
+        query = "select * from users where userID = %s"
+        val = (userID, )
         self.cursor.execute(query, val)
         result = self.cursor.fetchone()
-        print(result)
+        return result
+
+    # returns false if email is not in use
+    def check_if_email_in_users(self, email):
+        emails = self.select_user_by_email(email)
+        return not(emails is None)
+
+
+
+
 
     # destructer
     def __del__(self):
