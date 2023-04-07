@@ -1,8 +1,6 @@
 class User:
-    def __init__(self, userID, friendID ,albumID, fname , lname, email, DOB, gender, homeTown, PW ):
+    def __init__(self, userID, fname , lname, email, DOB, gender, homeTown, PW ):
         self.userID = userID
-        self.friendID = friendID
-        self.albumID = albumID
         self.fname = fname
         self.lname = lname
         self.email = email
@@ -25,10 +23,9 @@ class UserFriend:
 
 
 class ALbum:
-    def __int__(self, albumID, userID, photoID, albumName, dateCreated):
+    def __int__(self, albumID, userID, albumName, dateCreated):
         self.albumID = albumID
         self.userID = userID
-        self.photoID = photoID
         self.albuName = albumName
         self.dateCreated = dateCreated
 
@@ -40,13 +37,11 @@ class Like:
 
 
 class Photo:
-    def __int__(self, photoID, albumID, commentID, tagID, caption, DATA):
+    def __int__(self, photoID, albumID, caption, img):
         self.photoID = photoID
         self.albumID = albumID
-        self.commentID = commentID
-        self.tagID = tagID
         self.caption = caption
-        self.DATA = DATA
+        self.img = img
 
 
 class Comment:
@@ -59,7 +54,11 @@ class Comment:
 
 
 class Tag:
-    def __int__(self, tagID, photoID, tagName):
+    def __int__(self, tagID, tagName):
         self.tagID = tagID
         self.tagName = tagName
-        self.photoID = photoID
+
+class PhotoTag:
+    def __int__(self, photoID, tagID):
+        self.photoId = photoID
+        self.tagID = tagID
