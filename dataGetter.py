@@ -319,7 +319,44 @@ class MySQLDatabase:
         self.cursor.execute(query, tuple(tag_ids))
         result = self.cursor.fetchall()
         return result
+        
+   
+    def select_max_userID(self):
+        query = "SELECT MAX(UserID) FROM Users"
+        self.cursor.execute(query)
+        result = self.cursor.fetchone()
+        largest_user_id = result[0]
+        return largest_user_id
 
+    def select_max_albumID(self):
+        query = "SELECT MAX(albumID) FROM Albums"
+        self.cursor.execute(query)
+        result = self.cursor.fetchone()
+        largest = result[0]
+        return largest
+
+    def select_max_photoID(self):
+        query = "SELECT MAX(photoID) FROM photo"
+        self.cursor.execute(query)
+        result = self.cursor.fetchone()
+        largest = result[0]
+        return largest
+
+    def select_max_commentID(self):
+        query = "SELECT MAX(commentID) FROM comments"
+        self.cursor.execute(query)
+        result = self.cursor.fetchone()
+        largest = result[0]
+        return largest
+
+    def select_max_tagID(self):
+        query = "SELECT MAX(tagID) FROM tags"
+        self.cursor.execute(query)
+        result = self.cursor.fetchone()
+        largest = result[0]
+        return largest
+        
+        
     # destructer
     def __del__(self):
         self.cursor.close()
