@@ -185,23 +185,36 @@ class MySQLDatabase:
 
 
     #friends of friends
-    def select_friends_of_friends(self, userId):
+    def recommend_friends(self, user_id):
         query = """
-            SELECT f2.FriendID, COUNT(*) AS MutualFriends
-            FROM Friends f1
-            JOIN UserFriends uf1 ON f1.FriendID = uf1.FriendID
-            JOIN UserFriends uf2 ON uf1.UserID = uf2.FriendID
-            JOIN Friends f2 ON uf2.FriendID = f2.FriendID
-            WHERE uf1.UserID = %s AND f2.FriendID <> uf1.UserID
-            GROUP BY f2.FriendID
-            ORDER BY MutualFriends DESC;
+        SELECT
+            PotentialFriends.UserID,
+            PotentialFriends.Fname,
+            PotentialFriends.Lname,
+            COUNT(*) AS CommonFriendsCount
+        FROM
+            UserFriends AS User_Friends
+        JOIN
+            UserFriends AS Friends_Friends ON User_Friends.FriendID = Friends_Friends.UserID
+        JOIN
+            Users AS PotentialFriends ON Friends_Friends.FriendID = PotentialFriends.UserID
+        WHERE
+            User_Friends.UserID = %s
+            AND PotentialFriends.UserID != %s
+            AND PotentialFriends.UserID NOT IN (
+                SELECT FriendID
+                FROM UserFriends
+                WHERE UserID = %s
+            )
+        GROUP BY
+            PotentialFriends.UserID, PotentialFriends.Fname, PotentialFriends.Lname
+        ORDER BY
+            CommonFriendsCount DESC;
         """
-        val = (userId, )
-        self.cursor.execute(query, val)
+        # Pass the user_id variable as a tuple to the execute() method
+        self.cursor.execute(query, (user_id, user_id, user_id))
         result = self.cursor.fetchall()
-        for row in result:
-            result1 = result1 + (self.select_user_by_ID(row[0]), )
-        return result1
+        return result
 
     def select_user_by_ID(self, userID):
         query = "select * from users where userID = %s"
@@ -210,18 +223,108 @@ class MySQLDatabase:
         result = self.cursor.fetchone()
         return result
 
+    def select_photo_by_tagName(self, tagName):
+        query = """
+            SELECT Photo.PhotoID, Photo.Caption, Photo.img
+            FROM Photo
+            JOIN PhotoTags ON Photo.PhotoID = PhotoTags.PhotoID
+            JOIN Tags ON PhotoTags.TagID = Tags.TagID
+            WHERE Tags.TagName = %s;
+        """
+        val = (tagName, )
+        self.cursor.execute(query, val)
+        result = self.cursor.fetchall()
+        return result
+
+    def select_photo_by_tag_and_userId(self, tagName, userID):
+        query = """
+                SELECT Photo.PhotoID, Photo.Caption, Photo.img
+                FROM Photo
+                JOIN PhotoTags ON Photo.PhotoID = PhotoTags.PhotoID
+                JOIN Tags ON PhotoTags.TagID = Tags.TagID
+                JOIN Albums ON Photo.AlbumID = Albums.AlbumID
+                JOIN Users ON Albums.UserID = Users.UserID
+                WHERE Tags.TagName = %s
+                AND Users.UserID = %s;
+                """
+        vals = (tagName, userID)
+        self.cursor.execute(query, vals)
+        result = self.cursor.fetchall()
+        return result
+
+    def find_most_popular_tags(self):
+        query = """
+                SELECT Tags.TagName, COUNT(PhotoTags.PhotoID) AS TagCount
+                FROM Tags
+                JOIN PhotoTags ON Tags.TagID = PhotoTags.TagID
+                GROUP BY Tags.TagID, Tags.TagName
+                ORDER BY TagCount DESC
+                LIMIT 10;
+        """
+        self.cursor.execute(query)
+        result = self.cursor.fetchall()
+        return result
+
     # returns false if email is not in use
     def check_if_email_in_users(self, email):
         emails = self.select_user_by_email(email)
         return not(emails is None)
 
 
+    def search_by_comment(self, com):
+        query = """
+        SELECT Users.UserID, Users.Fname, Users.Lname, COUNT(Comments.CommentID) AS MatchingCommentCount
+        FROM Users
+        JOIN Comments ON Users.UserID = Comments.UserID
+        WHERE Comments.text LIKE %s
+        GROUP BY Users.UserID, Users.Fname, Users.Lname
+        HAVING COUNT(Comments.CommentID) > 0
+        ORDER BY MatchingCommentCount DESC;
+        """
+        search_term = f"%{com}%"
+        val = (search_term, )
+        self.cursor.execute(query, val)
+        result = self.cursor.fetchall()
+        return result
 
+    def get_top_five_tags(self, user_id):
+        query = """
+        SELECT Tags.TagID, Tags.TagName, COUNT(*) AS TagCount
+        FROM PhotoTags
+        JOIN Tags ON PhotoTags.tagID = Tags.TagID
+        JOIN Photo ON PhotoTags.photoID = Photo.PhotoID
+        JOIN Albums ON Photo.AlbumID = Albums.AlbumID
+        WHERE Albums.UserID = %s
+        GROUP BY Tags.TagID, Tags.TagName
+        ORDER BY TagCount DESC
+        LIMIT 5;
+        """
+        self.cursor.execute(query, (user_id,))
+        result = self.cursor.fetchall()
+        return result
 
+    def recommend_photos(self, user_id):
+        top_five_tags = self.get_top_five_tags(self, user_id)
+        tag_ids = [tag[0] for tag in top_five_tags]
+
+        query = """
+        SELECT Photo.PhotoID, COUNT(PhotoTags.tagID) AS MatchedTags, COUNT(DISTINCT pt_all.tagID) AS TotalTags
+        FROM Photo
+        LEFT JOIN PhotoTags ON Photo.PhotoID = PhotoTags.photoID
+        LEFT JOIN PhotoTags AS pt_all ON Photo.PhotoID = pt_all.photoID
+        WHERE PhotoTags.tagID IN (%s, %s, %s, %s, %s)
+        GROUP BY Photo.PhotoID
+        ORDER BY MatchedTags DESC, TotalTags ASC;
+        """
+        self.cursor.execute(query, tuple(tag_ids))
+        result = self.cursor.fetchall()
+        return result
 
     # destructer
     def __del__(self):
         self.cursor.close()
         self.db.close()
+
+
 
 
