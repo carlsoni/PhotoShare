@@ -35,7 +35,11 @@ def create_account():
     gender = request.form['gender']
 
     # Add your logic here to store the user information in your database
-
-    return f"Account created for {first_name} {last_name}"
+    if db.check_if_email_in_users(email):
+        return 'Error, user already exists'
+    else:
+        userID = db.select_max_userID() + 1
+        db.insert_user(userID, first_name, last_name, email, dob, gender, hometown, password)
+        return f"Account created for {first_name} {last_name}"
 
 
