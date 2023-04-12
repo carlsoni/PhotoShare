@@ -3,6 +3,7 @@
 from flask import Flask, render_template, session, redirect, url_for, flash, request, g
 from my_app import app  #These are defined in __init__.py in the source directory of MyProject/my_app
 from my_app.portal.models import MySQLDatabase
+from my_app.portal.Table_Classes import User, Friend, UserFriend, ALbum, Like, Photo, Comment, Tag, PhotoTag
 
 db = MySQLDatabase()
 #Routes for main web application
