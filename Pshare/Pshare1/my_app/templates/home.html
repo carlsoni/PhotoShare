@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #eee;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      form {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      input[type='text'] {
+        padding: 5px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 60%;
+        margin-right: 10px;
+      }
+
+      button[type='submit'] {
+        padding: 5px 10px;
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      h2 {
+        margin-top: 30px;
+      }
+
+      .friend-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .friend-list li {
+        margin-bottom: 10px;
+        font-size: 18px;
+      }
+      .logoutContainer {
+        position: absolute;
+        top: 2%;
+        right: 2%;
+      }
+      .suggestionContainer {
+        position: absolute;
+        top: 5%;
+        right: -50%;
+        display: flex;
+        flex-direction: column;
+      }
+      .btn-logout {
+        padding: 5px 10px;
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .img-avatar {
+        height: 10%;
+        width: 25%;
+      }
+      .innerFriend {
+        border: 1px solid black;
+        width: 20%;
+        display: flex;
+        margin-top: 2%;
+      }
+      .friendsName {
+        margin-left: 8%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Friends List</h1>
+      <form>
+        <label for="add-friend">Add Friend:</label>
+        <input
+          type="text"
+          id="add-friend"
+          name="add-friend"
+          placeholder="Type name to add friend"
+        />
+        <button type="submit">Add</button>
+      </form>
+      <form>
+        <label for="search-friends">Search Friends:</label>
+        <input
+          type="text"
+          id="search-friends"
+          name="search-friends"
+          placeholder="Search for friends here."
+        />
+        <button type="submit">Search</button>
+      </form>
+      <h2>My Friends:</h2>
+      <ul class="friend-list">
+        <li>
+          <div class="innerFriend">
+            <img src="./avatar.png" alt="" class="img-avatar" />
+            <p class="friendsName">Friend 1</p>
+          </div>
+        </li>
+        <li>
+          <div class="innerFriend">
+            <img src="./avatar.png" alt="" class="img-avatar" />
+            <p class="friendsName">Friend 1</p>
+          </div>
+        </li>
+        <li>
+          <div class="innerFriend">
+            <img src="./avatar.png" alt="" class="img-avatar" />
+            <p class="friendsName">Friend 1</p>
+          </div>
+        </li>
+      </ul>
+      <div class="logoutContainer">
+        <button class="btn-logout">Logout</button>
+      </div>
+      <div class="suggestionContainer">
+        <h1>Suggestions</h1>
+
+        <div class="innerFriend">
+          <img src="./avatar.png" alt="" class="img-avatar" />
+          <p class="friendsName">Friend 1</p>
+        </div>
+
+        <div class="innerFriend">
+          <img src="./avatar.png" alt="" class="img-avatar" />
+          <p class="friendsName">Friend 2</p>
+        </div>
+        <div class="innerFriend">
+          <img src="./avatar.png" alt="" class="img-avatar" />
+          <p class="friendsName">Friend 3</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

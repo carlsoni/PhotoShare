@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Photo Search</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #eee;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      form {
+        text-align: center;
+      }
+
+      form label {
+        display: inline-block;
+        margin-right: 10px;
+      }
+
+      form input[type='text'],
+      form input[type='submit'],
+      form select {
+        font-size: 16px;
+        padding: 5px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+      }
+
+      form input[type='submit'] {
+        background-color: #de0aff;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      form input[type='submit']:hover {
+        background-color: #3e8;
+      }
+
+      .photo-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .photo-list li {
+        margin-bottom: 20px;
+      }
+
+      .photo-list img {
+        max-width: 200px;
+        height: auto;
+      }
+
+      .photo-list p {
+        margin-bottom: 10px;
+      }
+
+      .photo-list .tag-list li {
+        margin-right: 5px;
+      }
+
+      .photo-list .tag-list a {
+        display: inline-block;
+        padding: 5px;
+        background-color: #ccc;
+        color: #000;
+        border-radius: 3px;
+        text-decoration: none;
+      }
+
+      .photo-list .tag-list a:hover {
+        background-color: #bbb;
+      }
+
+      .logoutContainer {
+        position: absolute;
+        top: 2%;
+        right: 2%;
+      }
+      .btn-logout {
+        padding: 5px 10px;
+        background-color: #de0aff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Photo Search</h1>
+    <div class="logoutContainer">
+      <button class="btn-logout">Logout</button>
+    </div>
+    <form>
+      <label for="search-field">Search:</label>
+      <input
+        type="text"
+        id="search-field"
+        name="search"
+        placeholder="Enter tags..."
+      />
+      <input type="submit" value="Search" />
+      <label for="search-type">Search Type:</label>
+      <select id="search-type" name="search-type">
+        <option value="all">All Photos</option>
+        <option value="user">User's Photos Only</option>
+      </select>
+    </form>
+    <hr />
+    <h2>Search Results</h2>
+    <div class="container">
+      <ul class="photo-list">
+        <li data-photo-id="1">
+          <img src="./Chicken.jpeg" />
+          <p>Photo 1 Name</p>
+          <ul class="tag-list">
+            <li><a href="#" data-tag-name="friends">Friends</a></li>
+            <li><a href="#" data-tag-name="Lovely">Lovely</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

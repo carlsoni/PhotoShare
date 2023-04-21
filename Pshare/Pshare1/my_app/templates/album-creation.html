@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Photo and Album Creation</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #eee;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+      }
+
+      label {
+        margin-bottom: 10px;
+      }
+
+      input,
+      textarea {
+        margin-bottom: 10px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+      }
+
+      button {
+        margin-top: 10px;
+        padding: 5px 10px;
+        background-color: #de0aff;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #de0aff;
+      }
+      .logoutContainer {
+        position: absolute;
+        top: 2%;
+        right: 2%;
+      }
+      .btn-logout {
+        padding: 5px 10px;
+        background-color: #de0aff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Photo and Album Creation</h1>
+    <div class="container">
+      <div class="logoutContainer">
+        <button class="btn-logout">Logout</button>
+      </div>
+      <h2>Create Album</h2>
+      <form action="" method="post">
+        <label for="album-name">Album Name:</label>
+        <input type="text" id="album-name" name="album-name" required />
+        <br />
+        <label for="album-description">Album Description:</label>
+        <textarea id="album-description" name="album-description"></textarea>
+        <br />
+        <button type="submit">Create Album</button>
+      </form>
+      <hr />
+      <h2>Upload Photo</h2>
+      <form action="" method="post" enctype="multipart/form-data">
+        <label for="album-id">Select Album:</label>
+        <select id="album-id" name="album-id" required>
+          <option value="">-- Select Album --</option>
+        </select>
+        <br />
+        <label for="photo-name">Photo Name:</label>
+        <input type="text" id="photo-name" name="photo-name" required />
+        <br />
+        <label for="photo-file">Select Photo:</label>
+        <input
+          type="file"
+          id="photo-file"
+          name="photo-file"
+          accept="image/*"
+          required
+        />
+        <br />
+        <button type="submit">Upload Photo</button>
+      </form>
+      <hr />
+      <h2>Albums</h2>
+      <ul id="album-list">
+        <li data-album-id="1">
+          <h3>Album 1</h3>
+          <p>Album 1 Description</p>
+          <button class="edit-btn">Edit</button>
+          <button class="delete-btn">Delete</button>
+          <ul class="photo-list">
+            <li data-photo-id="1">
+              <img src="./Chicken.jpeg" />
+              <p>Test photo</p>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
