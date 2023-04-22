@@ -211,3 +211,68 @@ INSERT INTO photoTags(photoID, tagID)
         (8, 3),
         (9, 2),
         (10, 1);
+        
+        
+-- Adding 3 more users
+INSERT INTO Users (UserID, Fname, Lname, email, DOB, Gender, HomeTown, PW)
+VALUES
+(11, 'Mark', 'Johnson', 'markjohnson@example.com', '1984-11-11', 'Male', 'Atlanta', 'password123'),
+(12, 'Lisa', 'Williams', 'lisawilliams@example.com', '1997-12-12', 'Female', 'Detroit', 'secret321'),
+(13, 'Tom', 'Brown', 'tombrown@example.com', '1993-01-13', 'Male', 'Seattle', 'qwerty');
+
+
+-- Adding 3 more friendships
+INSERT INTO Friends (FriendID, FriendShipDate)
+VALUES
+(11, '2022-01-11'),
+(12, '2022-01-12'),
+(13, '2022-01-13');
+
+
+-- Adding 3 more user-friend relationships
+INSERT INTO UserFriends (UserID, FriendID)
+VALUES
+(11, 12),
+(12, 11),
+(13, 10);
+
+
+-- Adding 3 more photo albums
+INSERT INTO Albums (AlbumID, UserID, AlbumName, DateCreated)
+VALUES
+(11, 3, 'Graduation Photos', '2022-01-11'),
+(12, 5, 'Nature Photos', '2022-01-12'),
+(13, 7, 'Family Photos', '2022-01-13');
+
+
+-- Adding 3 more photos
+INSERT INTO Photo (PhotoID, AlbumID, Caption, img)
+VALUES
+(11, 8, 'Beautiful sunrise', load_file('C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\photoSharePhotos\\sunrise.jpg')),
+(12, 3, 'Bride and father', load_file('C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\photoSharePhotos\\wedding2.jpg')),
+(13, 10, 'Foodie heaven', load_file('C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\photoSharePhotos\\food2.jpg'));
+
+
+-- Adding 3 more comments
+INSERT INTO Comments (CommentID, PhotoID, UserID, text, date)
+VALUES
+(11, 1, 5, 'Missing summer!', '2022-01-11'),
+(12, 6, 9, 'What a breathtaking view!', '2022-01-12'),
+(13, 2, 7, 'One of my favorite places!', '2022-01-13');
+
+
+-- Adding 3 more tags
+INSERT INTO Tags(TagID, TagName)
+VALUES
+(11, 'river'),
+(12, 'skyscraper'),
+(13, 'dessert');
+
+
+-- Adding 3 more likes
+INSERT INTO Likes (userID, photoID)
+VALUES
+(11, 2),
+(12, 1),
+(13, 4);
+
