@@ -85,9 +85,37 @@
   <body>
     <h1>Comment Search</h1>
     <form>
-      <div class="logoutContainer">
-        <button class="btn-logout">Logout</button>
-      </div>
+       <div class="logoutContainer">
+            <form method="POST" action="/comment_search">
+                <button class="btn-logout" name="logout" value="logout">Logout</button>
+            </form>
+        </div>
+
+        <div class="home">
+            <form method="POST" action="/comment_search">
+                <button class="btn-home" name="home" value="home">home</button>
+            </form>
+        </div>
+        <div class="album">
+            <form method="POST" action="/comment_search">
+                <button class="btn-album" name="album" value="album">album</button>
+            </form>
+        </div>
+        <div class="album-creation">
+            <form method="POST" action="/comment_search">
+                <button class="btn-album-creation" name="album-creation" value="album-creation">album-creation</button>
+            </form>
+        </div>
+        <div class="photo-tags">
+            <form method="POST" action="/comment_search">
+                <button class="btn-photo-tags" name="photo-tags" value="photo-tags">photo-tags</button>
+            </form>
+        </div>
+        <div class="search-photo-tags">
+            <form method="POST" action="/comment_search">
+                <button class="btn-search-photo-tags" name="search-photo-tags" value="search-photo-tags">search-photo-tags</button>
+            </form>
+        </div>
       <label for="search-field">Search:</label>
       <input
         type="text"
