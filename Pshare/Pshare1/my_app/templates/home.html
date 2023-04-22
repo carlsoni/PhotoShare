@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-      body {
+        body {
         font-family: Arial, sans-serif;
         background-color: #eee;
       }
@@ -91,71 +91,68 @@
         margin-left: 8%;
       }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <div class="container">
-      <h1>Friends List</h1>
-      <form>
-        <label for="add-friend">Add Friend:</label>
-        <input
-          type="text"
-          id="add-friend"
-          name="add-friend"
-          placeholder="Type name to add friend"
-        />
-        <button type="submit">Add</button>
-      </form>
-      <form>
-        <label for="search-friends">Search Friends:</label>
-        <input
-          type="text"
-          id="search-friends"
-          name="search-friends"
-          placeholder="Search for friends here."
-        />
-        <button type="submit">Search</button>
-      </form>
-      <h2>My Friends:</h2>
-      <ul class="friend-list">
-        <li>
-          <div class="innerFriend">
-            <img src="./avatar.png" alt="" class="img-avatar" />
-            <p class="friendsName">Friend 1</p>
-          </div>
-        </li>
-        <li>
-          <div class="innerFriend">
-            <img src="./avatar.png" alt="" class="img-avatar" />
-            <p class="friendsName">Friend 1</p>
-          </div>
-        </li>
-        <li>
-          <div class="innerFriend">
-            <img src="./avatar.png" alt="" class="img-avatar" />
-            <p class="friendsName">Friend 1</p>
-          </div>
-        </li>
-      </ul>
-      <div class="logoutContainer">
-        <button class="btn-logout">Logout</button>
-      </div>
-      <div class="suggestionContainer">
-        <h1>Suggestions</h1>
-
-        <div class="innerFriend">
-          <img src="./avatar.png" alt="" class="img-avatar" />
-          <p class="friendsName">Friend 1</p>
+        <h1>Friends List</h1>
+        <form method="POST" action="/home">
+            <label for="add-friend">Add Friend:</label>
+            <input type="text" id="add-friend" name="add_friend" placeholder="Type name to add friend" />
+            <button type="submit">Add</button>
+        </form>
+        <form method="POST" action="/home">
+\            <label for="search-friends">Search Friends:</label>
+            <input type="text" id="search-friends" name="search_friends" placeholder="Search for friends here." />
+            <button type="submit">Search</button>
+        </form>
+        <h2>My Friends:</h2>
+        <ul class="friend-list">
+                <li>
+                    <div class="innerFriend">
+                        <img src="./avatar.png" alt="" class="img-avatar" />
+                        <p class="friendsName"></p>
+                    </div>
+                </li>
+        </ul>
+        <div class="logoutContainer">
+            <form method="POST" action="/home">
+                <button class="btn-logout" name="logout" value="logout">Logout</button>
+            </form>
         </div>
 
-        <div class="innerFriend">
-          <img src="./avatar.png" alt="" class="img-avatar" />
-          <p class="friendsName">Friend 2</p>
+        <div class="album">
+            <form method="POST" action="/home">
+                <button class="btn-album" name="album" value="album">album</button>
+            </form>
         </div>
-        <div class="innerFriend">
-          <img src="./avatar.png" alt="" class="img-avatar" />
-          <p class="friendsName">Friend 3</p>
+        <div class="album-creation">
+            <form method="POST" action="/home">
+                <button class="btn-album-creation" name="album-creation" value="album-creation">album-creation</button>
+            </form>
         </div>
-      </div>
+        <div class="comment-search">
+            <form method="POST" action="/home">
+                <button class="btn-comment-search" name="comment-search" value="comment-search">comment-search</button>
+            </form>
+        </div>
+        <div class="photo-tags">
+            <form method="POST" action="/home">
+                <button class="btn-photo-tags" name="photo-tags" value="photo-tags">photo-tags</button>
+            </form>
+        </div>
+        <div class="search-photo-tags">
+            <form method="POST" action="/home">
+                <button class="btn-search-photo-tags" name="search-photo-tags" value="search-photo-tags">search-photo-tags</button>
+            </form>
+        </div>
+        <div class="suggestionContainer">
+            <h1>Suggestions</h1>
+                <div class="innerFriend">
+                    <img src="./avatar.png" alt="" class="img-avatar" />
+                    <p class="friendsName"></p>
+                </div>
+        </div>
     </div>
-  </body>
+</body>
 </html>
+
