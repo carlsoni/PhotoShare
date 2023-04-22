@@ -100,9 +100,36 @@
   </head>
   <body>
     <h1>Photo Search</h1>
-    <div class="logoutContainer">
-      <button class="btn-logout">Logout</button>
-    </div>
+       <div class="logoutContainer">
+            <form method="POST" action="/search_photo_tags">
+                <button class="btn-logout" name="logout" value="logout">Logout</button>
+            </form>
+        </div>
+        <div class="home">
+            <form method="POST" action="/search_photo_tags">
+                <button class="btn-home" name="home" value="home">home</button>
+            </form>
+        </div>
+        <div class="album">
+            <form method="POST" action="/search_photo_tags">
+                <button class="btn-album" name="album" value="album">album</button>
+            </form>
+        </div>
+        <div class="album-creation">
+            <form method="POST" action="/search_photo_tags">
+                <button class="btn-album-creation" name="album-creation" value="album-creation">album-creation</button>
+            </form>
+        </div>
+        <div class="comment-search">
+            <form method="POST" action="/search_photo_tags">
+                <button class="btn-comment-search" name="comment-search" value="comment-search">comment-search</button>
+            </form>
+        </div>
+        <div class="photo-tags">
+            <form method="POST" action="/search_photo_tags">
+                <button class="btn-photo-tags" name="photo-tags" value="photo-tags">photo-tags</button>
+            </form>
+        </div>
     <form>
       <label for="search-field">Search:</label>
       <input
