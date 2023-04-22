@@ -88,9 +88,9 @@ class MySQLDatabase:
         return result
 
     # searches for other users based on first name or last name
-    def select_user_by_name(self, fname, lname):
-        query = "SELECT * FROM Users WHERE Fname = %s OR Lname = %s"
-        val = (fname, lname)
+    def select_user_by_name(self, fname, lname, email):
+        query = "SELECT * FROM Users WHERE Fname = %s OR Lname = %s OR email = %s"
+        val = (fname, lname, email)
         self.cursor.execute(query, val)
         resut = self.cursor.fetchall()
         return resut
@@ -139,8 +139,8 @@ class MySQLDatabase:
         query = "SELECT img FROM photo WHERE photoID = %s"
         val = (photoID, )
         self.cursor.execute(query, val)
-        result = self.cursor.fetchall()
-        return result
+        photo_blob = self.cursor.fetchone()[0]
+        return photo_blob
 
     def select_album_by_userID(self, userID):
         query = "select * from albums WHERE userID = %s"
