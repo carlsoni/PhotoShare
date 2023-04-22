@@ -91,9 +91,37 @@
   </head>
   <body>
     <div class="container">
-      <div class="logoutContainer">
-        <button class="btn-logout">Logout</button>
-      </div>
+             <div class="logoutContainer">
+            <form method="POST" action="/album">
+                <button class="btn-logout" name="logout" value="logout">Logout</button>
+            </form>
+        </div>
+
+        <div class="home">
+            <form method="POST" action="/album">
+                <button class="btn-home" name="home" value="home">home</button>
+            </form>
+        </div>
+        <div class="album-creation">
+            <form method="POST" action="/album">
+                <button class="btn-album-creation" name="album-creation" value="album-creation">album-creation</button>
+            </form>
+        </div>
+        <div class="comment-search">
+            <form method="POST" action="/album">
+                <button class="btn-comment-search" name="comment-search" value="comment-search">comment-search</button>
+            </form>
+        </div>
+        <div class="photo-tags">
+            <form method="POST" action="/album">
+                <button class="btn-photo-tags" name="photo-tags" value="photo-tags">photo-tags</button>
+            </form>
+        </div>
+        <div class="search-photo-tags">
+            <form method="POST" action="/album">
+                <button class="btn-search-photo-tags" name="search-photo-tags" value="search-photo-tags">search-photo-tags</button>
+            </form>
+        </div>
       <h1>Photo and Album Browsing</h1>
       <div class="tabs">
         <div>
@@ -138,3 +166,4 @@
     </div>
   </body>
 </html>
+
